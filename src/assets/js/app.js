@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import whatInput from 'what-input';
-import './lib/react/main';
+
 
 window.$ = $;
 
