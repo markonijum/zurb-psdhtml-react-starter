@@ -74,10 +74,15 @@ function sass() {
 }
 
 let webpackConfig = {
+  resolve : {
+    extensions: ['.js', '.json', '.jsx'],
+    modules: ['./src/assets/js','node_modules']
+  },
   module: {
     rules: [
       {
         test: /.jsx?$/,
+        exclude: /node_modules/,
         use: [
           {
             loader: 'babel-loader'
@@ -85,8 +90,17 @@ let webpackConfig = {
         ]
       }
     ]
-  }
+  },
+  plugins: [
+      new webpack2.ProvidePlugin({
+        $: 'jquery',
+        jQuery: 'jquery',
+        'window.jQuery': 'jquery',
+        Popper: ['popper.js', 'default']
+      })
+  ]
 }
+
 // Combine JavaScript into one file
 // In production, the file is minified
 function javascript() {
@@ -131,5 +145,6 @@ function watch() {
   gulp.watch('src/pages/**/*.html').on('all', gulp.series(pages, browser.reload));
   gulp.watch('src/assets/scss/**/*.scss').on('all', sass);
   gulp.watch('src/assets/js/**/*.js').on('all', gulp.series(javascript, browser.reload));
+  gulp.watch('src/assets/js/**/*.jsx').on('all', gulp.series(javascript, browser.reload));
   gulp.watch('src/assets/img/**/*').on('all', gulp.series(images, browser.reload));
 }

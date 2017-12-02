@@ -1,4 +1,5 @@
 {
-	"presets": ["es2015", "env"],
-  "compact": false
+	"presets": ["es2015", "env", "react"],
+  "compact": false,
+  "plugins": ["transform-class-properties"]
 }
